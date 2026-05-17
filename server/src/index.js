@@ -7,8 +7,17 @@ import { usageMap } from './store.js'
 const app = express()
 const PORT = process.env.PORT || 3001
 
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
 app.use(cors())
 app.use(express.json({ limit: '50kb' }))
+
+// Serve static frontend files
+app.use(express.static(path.join(__dirname, '..', 'public')))
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, '..', 'public', 'index.html')))
 
 app.use('/api/optimize', (req, res, next) => {
   const ip = req.ip || req.socket.remoteAddress || 'unknown'
