@@ -9,7 +9,7 @@ export default function useOptimize() {
     setError(null)
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || '/api/optimize'
+      const apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? '/api/optimize' : 'https://resume-optimizer-api-uuit.onrender.com/api/optimize')
       const res = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
